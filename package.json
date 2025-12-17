@@ -1,0 +1,19 @@
+{
+  "name": "dev-fun-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "node-cron": "^4.2.1",
+    "openai": "^6.14.0",
+    "twitter-api-v2": "^1.28.0"
+  }
+}
