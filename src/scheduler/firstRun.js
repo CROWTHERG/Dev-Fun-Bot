@@ -1,4 +1,3 @@
-// src/scheduler/firstRun.js
 const rwClient = require('../config/twitter');
 const tips = require('../content/tips');
 const jokes = require('../content/jokes');
@@ -14,6 +13,9 @@ async function firstRun() {
     if (type < 0.5) tweetContent = await generateDevTip();
     else tweetContent = await generateDevJoke();
 
+    // Ensure max 280 chars
+    tweetContent = tweetContent?.substring(0, 280);
+
   } catch (err) {
     console.warn("OpenAI failed, using local content:", err.message);
 
@@ -21,12 +23,18 @@ async function firstRun() {
     const type = Math.random();
     if (type < 0.5) tweetContent = tips[Math.floor(Math.random() * tips.length)];
     else tweetContent = jokes[Math.floor(Math.random() * jokes.length)];
+
+    // Ensure max 280 chars
+    tweetContent = tweetContent?.substring(0, 280);
   }
+
+  // Final safety fallback
+  if (!tweetContent) tweetContent = "Hello world! Dev-Fun-Bot is live 🚀";
 
   try {
     const tweet = await rwClient.v2.tweet(tweetContent);
     log('First deploy tweet posted: ' + tweetContent);
-    console.log('First deploy tweet ID:', tweet.data.id);
+    console.log('First deploy tweet ID:', tweet?.data?.id);
   } catch (err) {
     console.error('Error posting first tweet:', err);
   }
